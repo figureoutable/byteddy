@@ -49,7 +49,7 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
               className={cn(
                 "rounded-md px-3 py-2 text-sm transition-colors",
                 isActive
-                  ? "bg-primary text-surface"
+                  ? "rounded-[6px] bg-primary text-surface"
                   : "text-secondary hover:bg-page"
               )}
             >
