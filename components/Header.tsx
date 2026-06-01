@@ -8,6 +8,10 @@ const pageMeta: Record<string, { title: string; subtitle?: string }> = {
     title: "Cash flow forecast",
     subtitle: "12-week rolling forecast",
   },
+  "/forecaster": {
+    title: "Revenue forecaster",
+    subtitle: "Scenario planning for ecommerce growth",
+  },
   "/investor": {
     title: "Investor portal",
     subtitle: "Shared documents and business performance",

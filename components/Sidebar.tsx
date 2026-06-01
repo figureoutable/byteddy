@@ -10,6 +10,7 @@ import { ComingSoonBadge } from "@/components/ui/badge";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", disabled: false },
   { href: "/cashflow", label: "Cash flow", disabled: false },
+  { href: "/forecaster", label: "Revenue forecaster", disabled: false },
   { href: "/investor", label: "Investor portal", disabled: false },
   { href: "#", label: "Inventory", disabled: true },
   { href: "#", label: "Stock analysis", disabled: true },
@@ -21,8 +22,8 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <>
       <div className="px-4 py-6">
-        <p className="font-medium text-xl lowercase tracking-tight text-primary">
-          by teddy
+        <p className="font-medium text-xl tracking-tight text-primary">
+          By Teddy
         </p>
       </div>
       <nav className="flex flex-1 flex-col gap-1 px-3 pb-6">
@@ -68,7 +69,7 @@ export function Sidebar() {
   return (
     <>
       <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b-hairline border-border bg-surface px-4 py-3 lg:hidden">
-        <p className="font-medium text-lg lowercase text-primary">by teddy</p>
+        <p className="font-medium text-lg text-primary">By Teddy</p>
         <button
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}

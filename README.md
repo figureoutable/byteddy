@@ -11,10 +11,17 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) — the app redirects to `/dashboard`.
 
+Run on a custom port:
+
+```bash
+npm run dev -- -p 4001
+```
+
 ## Pages
 
 - `/dashboard` — metrics, revenue chart, inventory snapshot
 - `/cashflow` — 12-week cash flow forecast
+- `/forecaster` — revenue forecaster with scenario planning
 - `/investor` — investor portal with documents and business overview
 
 ## Stack

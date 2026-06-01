@@ -2,10 +2,13 @@ export type Period = "thisMonth" | "lastMonth";
 
 export type StockStatus = "inStock" | "lowStock" | "reorderNow";
 
+export type SubLabelTone = "neutral" | "success" | "warning";
+
 export interface MetricCardData {
   label: string;
   value: string;
   subLabel: string;
+  subLabelTone?: SubLabelTone;
   accent?: boolean;
 }
 
@@ -63,6 +66,7 @@ export const dashboardMetrics: Record<Period, DashboardMetrics> = {
       label: "Income",
       value: "£102,400",
       subLabel: "+4.5% vs last month",
+      subLabelTone: "success",
       accent: true,
     },
     profit: {
@@ -86,6 +90,7 @@ export const dashboardMetrics: Record<Period, DashboardMetrics> = {
       label: "Income",
       value: "£97,800",
       subLabel: "+2.1% vs prior month",
+      subLabelTone: "success",
       accent: true,
     },
     profit: {
@@ -105,6 +110,192 @@ export const dashboardMetrics: Record<Period, DashboardMetrics> = {
     },
   },
 };
+
+export interface EcommerceKpiSet {
+  primary: MetricCardData[];
+  secondary: MetricCardData[];
+}
+
+export interface SalesMonth {
+  month: string;
+  grossSales: number;
+  returns: number;
+  netSales: number;
+}
+
+export interface ChannelSale {
+  name: string;
+  value: number;
+  percent: number;
+  color: string;
+}
+
+export interface ExpenseCategory {
+  name: string;
+  value: number;
+  percent: number;
+  color: string;
+}
+
+export interface StockLevel {
+  name: string;
+  units: number;
+  capacity: number;
+  status: StockStatus;
+}
+
+export const dashboardPeriodLabels: Record<Period, string> = {
+  thisMonth: "Jun-26",
+  lastMonth: "May-26",
+};
+
+export const ecommerceKpis: Record<Period, EcommerceKpiSet> = {
+  thisMonth: {
+    primary: [
+      {
+        label: "Total revenue",
+        value: "£102,400",
+        subLabel: "+4.5% vs last month",
+        subLabelTone: "success",
+        accent: true,
+      },
+      {
+        label: "Average order value",
+        value: "£64.20",
+        subLabel: "+£2.10 vs last month",
+        subLabelTone: "success",
+      },
+      {
+        label: "Conversion rate",
+        value: "3.4%",
+        subLabel: "Target: 3.2%",
+        subLabelTone: "success",
+      },
+      {
+        label: "Customer acquisition cost",
+        value: "£11.80",
+        subLabel: "Blended paid + organic",
+      },
+    ],
+    secondary: [
+      {
+        label: "Net profit margin",
+        value: "28.0%",
+        subLabel: "After returns and ads",
+      },
+      {
+        label: "Return rate",
+        value: "6.2%",
+        subLabel: "Target: <8%",
+        subLabelTone: "success",
+      },
+      {
+        label: "Total orders",
+        value: "1,847",
+        subLabel: "+4.8% vs last month",
+        subLabelTone: "success",
+      },
+      {
+        label: "Ad spend (ROAS)",
+        value: "4.6x",
+        subLabel: "£8,200 spend this month",
+      },
+    ],
+  },
+  lastMonth: {
+    primary: [
+      {
+        label: "Total revenue",
+        value: "£97,800",
+        subLabel: "+2.1% vs prior month",
+        subLabelTone: "success",
+        accent: true,
+      },
+      {
+        label: "Average order value",
+        value: "£62.10",
+        subLabel: "Stable basket size",
+      },
+      {
+        label: "Conversion rate",
+        value: "3.1%",
+        subLabel: "Target: 3.2%",
+        subLabelTone: "warning",
+      },
+      {
+        label: "Customer acquisition cost",
+        value: "£12.40",
+        subLabel: "Blended paid + organic",
+      },
+    ],
+    secondary: [
+      {
+        label: "Net profit margin",
+        value: "27.0%",
+        subLabel: "After returns and ads",
+      },
+      {
+        label: "Return rate",
+        value: "6.8%",
+        subLabel: "Target: <8%",
+        subLabelTone: "success",
+      },
+      {
+        label: "Total orders",
+        value: "1,762",
+        subLabel: "+2.4% vs prior month",
+        subLabelTone: "success",
+      },
+      {
+        label: "Ad spend (ROAS)",
+        value: "4.2x",
+        subLabel: "£7,950 spend last month",
+      },
+    ],
+  },
+};
+
+export const salesPerformance12Months: SalesMonth[] = [
+  { month: "Jul", grossSales: 72000, returns: 4200, netSales: 67800 },
+  { month: "Aug", grossSales: 76000, returns: 4800, netSales: 71200 },
+  { month: "Sep", grossSales: 81000, returns: 5100, netSales: 75900 },
+  { month: "Oct", grossSales: 88000, returns: 5600, netSales: 82400 },
+  { month: "Nov", grossSales: 118000, returns: 9200, netSales: 108800 },
+  { month: "Dec", grossSales: 105000, returns: 7800, netSales: 97200 },
+  { month: "Jan", grossSales: 78000, returns: 4900, netSales: 73100 },
+  { month: "Feb", grossSales: 84000, returns: 5200, netSales: 78800 },
+  { month: "Mar", grossSales: 91000, returns: 5800, netSales: 85200 },
+  { month: "Apr", grossSales: 98000, returns: 6100, netSales: 91900 },
+  { month: "May", grossSales: 102000, returns: 6400, netSales: 95600 },
+  { month: "Jun", grossSales: 108500, returns: 6100, netSales: 102400 },
+];
+
+export const salesEventMarker = {
+  month: "Nov",
+  label: "Black Friday sale",
+};
+
+export const salesByChannel: ChannelSale[] = [
+  { name: "Shopify store", value: 71680, percent: 70, color: "#2C1A0E" },
+  { name: "Instagram shop", value: 20480, percent: 20, color: "#7A6A5A" },
+  { name: "Wholesale", value: 10240, percent: 10, color: "#C8BFB0" },
+];
+
+export const operatingExpensesPeriod = "Jun-26";
+
+export const operatingExpenses: ExpenseCategory[] = [
+  { name: "COGS", value: 49152, percent: 48, color: "#2C1A0E" },
+  { name: "Shipping & fulfillment", value: 14336, percent: 14, color: "#5C4A3A" },
+  { name: "Marketing spend", value: 8200, percent: 8, color: "#7A6A5A" },
+  { name: "Platform & G&A", value: 30720, percent: 30, color: "#9A8878" },
+];
+
+export const inventoryStockLevels: StockLevel[] = [
+  { name: "Classic teddy bear", units: 342, capacity: 400, status: "inStock" },
+  { name: "Linen gift set", units: 28, capacity: 80, status: "lowStock" },
+  { name: "Personalised embroidery kit", units: 156, capacity: 180, status: "inStock" },
+  { name: "Holiday stocking bundle", units: 0, capacity: 60, status: "reorderNow" },
+];
 
 export const revenueByMonth: RevenueMonth[] = [
   { month: "Jan", revenue: 73000, label: "£73k" },
@@ -158,7 +349,7 @@ export const investorStats: InvestorStat[] = [
 export const investorDocuments: InvestorDocument[] = [
   {
     id: "1",
-    title: "Cash flow forecast Q2 2025",
+    title: "By Teddy cash flow forecast Q2 2025",
     date: "12 May 2025",
   },
   {
@@ -168,12 +359,12 @@ export const investorDocuments: InvestorDocument[] = [
   },
   {
     id: "3",
-    title: "Investor update June 2025",
+    title: "By Teddy investor update June 2025",
     date: "18 Jun 2025",
   },
   {
     id: "4",
-    title: "Growth strategy deck",
+    title: "By Teddy growth strategy deck",
     date: "1 Apr 2025",
   },
 ];
@@ -192,6 +383,68 @@ export const stockStatusLabels: Record<StockStatus, string> = {
   inStock: "In stock",
   lowStock: "Low stock",
   reorderNow: "Reorder now",
+};
+
+export interface ForecastScenarioInputs {
+  marketingSpend: number;
+  cac: number;
+  ltv: number;
+  churnRate: number;
+  monthsForward: number;
+}
+
+export type ForecastScenarioSlot = "base" | "upside" | "conservative";
+
+export const forecastMeta = {
+  startingRevenue: 102400,
+  startingCustomers: 1847,
+  startingMonth: "Jun-26",
+  preparedBy: "Figures & finance Ltd",
+};
+
+export const forecastScenarioLabels: Record<ForecastScenarioSlot, string> = {
+  base: "Base case",
+  upside: "Upside",
+  conservative: "Conservative",
+};
+
+export const forecastScenarioPresets: Record<
+  ForecastScenarioSlot,
+  ForecastScenarioInputs
+> = {
+  base: {
+    marketingSpend: 8200,
+    cac: 11.8,
+    ltv: 186,
+    churnRate: 0.062,
+    monthsForward: 12,
+  },
+  upside: {
+    marketingSpend: 11200,
+    cac: 10.5,
+    ltv: 210,
+    churnRate: 0.055,
+    monthsForward: 12,
+  },
+  conservative: {
+    marketingSpend: 6400,
+    cac: 13.2,
+    ltv: 168,
+    churnRate: 0.072,
+    monthsForward: 12,
+  },
+};
+
+export const forecastBaseScenario: ForecastScenarioInputs = {
+  ...forecastScenarioPresets.base,
+};
+
+export const forecastInputHints = {
+  marketingSpend: "Planned monthly acquisition budget across paid and creator channels.",
+  cac: "Blended cost to acquire one new customer from paid media.",
+  ltv: "Assumed gross lifetime value per acquired customer over 18 months.",
+  churnRate:
+    "Share of monthly revenue lost to returns, cancellations, and customer drop-off.",
 };
 
 export const formatCurrency = (value: number): string =>
