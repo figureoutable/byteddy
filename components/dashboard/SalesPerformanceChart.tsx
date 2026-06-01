@@ -17,39 +17,41 @@ import {
   salesEventMarker,
   salesPerformance12Months,
 } from "@/lib/dummy-data";
+import { chartTheme } from "@/lib/chart-theme";
 import { Card } from "@/components/ui/card";
+
+const { grid, axis, tooltip, series } = chartTheme;
 
 export function SalesPerformanceChart() {
   return (
     <Card className="min-h-[360px]">
-      <h2 className="font-medium text-base text-primary">Sales performance</h2>
+      <h2 className="font-medium text-base">Sales performance</h2>
       <p className="mt-1 text-sm text-secondary">Last 12 months</p>
       <div className="mt-4 h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={salesPerformance12Months}
-            margin={{ top: 8, right: 8, left: 0, bottom: 0 }}
+            margin={{ top: 12, right: 12, left: 4, bottom: 0 }}
           >
-            <CartesianGrid stroke="#C8BFB0" strokeOpacity={0.25} vertical={false} />
+            <CartesianGrid
+              stroke={grid.stroke}
+              strokeOpacity={grid.opacity}
+              vertical={false}
+            />
             <XAxis
               dataKey="month"
-              axisLine={false}
+              axisLine={{ stroke: grid.stroke }}
               tickLine={false}
-              tick={{ fill: "#9A8878", fontSize: 12 }}
+              tick={axis}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#9A8878", fontSize: 12 }}
+              tick={axis}
               tickFormatter={(value) => `£${Math.round(Number(value) / 1000)}k`}
             />
             <Tooltip
-              contentStyle={{
-                background: "#FAF8F5",
-                border: "0.5px solid #C8BFB0",
-                borderRadius: 8,
-                color: "#2C1A0E",
-              }}
+              contentStyle={tooltip}
               formatter={(value, name) => {
                 if (typeof value !== "number") return ["", ""];
                 const labels: Record<string, string> = {
@@ -62,42 +64,45 @@ export function SalesPerformanceChart() {
             />
             <ReferenceLine
               x={salesEventMarker.month}
-              stroke="#993C1D"
-              strokeDasharray="4 4"
+              stroke={series.danger}
+              strokeWidth={2}
+              strokeDasharray="5 5"
               label={{
                 value: salesEventMarker.label,
                 position: "insideTopRight",
-                fill: "#993C1D",
+                fill: series.danger,
                 fontSize: 11,
+                fontWeight: 500,
               }}
             />
             <Area
               type="monotone"
               dataKey="netSales"
-              stroke="#2C1A0E"
-              fill="#2C1A0E"
-              fillOpacity={0.2}
-              strokeWidth={2}
+              stroke={series.primary}
+              fill={series.primary}
+              fillOpacity={0.18}
+              strokeWidth={2.5}
             />
             <Line
               type="monotone"
               dataKey="grossSales"
-              stroke="#7A6A5A"
-              strokeWidth={1.5}
-              strokeDasharray="4 4"
+              stroke={series.secondary}
+              strokeWidth={2}
+              strokeDasharray="6 4"
               dot={false}
             />
             <Line
               type="monotone"
               dataKey="returns"
-              stroke="#993C1D"
-              strokeWidth={1.5}
+              stroke={series.danger}
+              strokeWidth={2}
               dot={false}
             />
             <Legend
               verticalAlign="bottom"
-              height={36}
+              height={40}
               iconType="circle"
+              iconSize={8}
               formatter={(value) => {
                 const labels: Record<string, string> = {
                   grossSales: "Gross sales",
@@ -105,7 +110,7 @@ export function SalesPerformanceChart() {
                   netSales: "Net sales",
                 };
                 return (
-                  <span className="text-xs text-secondary">
+                  <span className="text-xs font-medium text-secondary">
                     {labels[value] ?? value}
                   </span>
                 );

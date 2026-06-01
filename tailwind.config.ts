@@ -9,23 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        page: "#F5F1EB",
-        surface: "#FAF8F5",
-        border: "#C8BFB0",
+        page: "#EDE8E0",
+        surface: "#FDFCFA",
+        border: "#B8AA9A",
+        "border-strong": "#9A8878",
         primary: "#2C1A0E",
-        secondary: "#7A6A5A",
-        muted: "#9A8878",
+        secondary: "#5C4A3A",
+        muted: "#756558",
         success: {
           DEFAULT: "#3B6D11",
-          bg: "#EAF3DE",
+          bg: "#E2EFD4",
         },
         warning: {
           DEFAULT: "#854F0B",
-          bg: "#FAEEDA",
+          bg: "#F8E8C8",
         },
         danger: {
           DEFAULT: "#993C1D",
-          bg: "#FAECE7",
+          bg: "#F8E4DC",
         },
       },
       fontFamily: {
@@ -35,8 +36,9 @@ const config: Config = {
         normal: "400",
         medium: "500",
       },
-      borderWidth: {
-        hairline: "0.5px",
+      boxShadow: {
+        card: "0 1px 2px rgba(44, 26, 14, 0.06), 0 2px 8px rgba(44, 26, 14, 0.04)",
+        "card-hover": "0 2px 4px rgba(44, 26, 14, 0.08), 0 4px 12px rgba(44, 26, 14, 0.06)",
       },
     },
   },

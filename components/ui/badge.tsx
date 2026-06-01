@@ -12,7 +12,7 @@ export function StatusBadge({ status }: { status: StockStatus }) {
   return (
     <span
       className={cn(
-        "inline-flex rounded px-2 py-0.5 text-xs font-normal",
+        "inline-flex rounded border border-current/15 px-2 py-0.5 text-xs font-medium",
         statusStyles[status]
       )}
     >
@@ -25,7 +25,7 @@ export function ComingSoonBadge({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "rounded bg-page px-1.5 py-0.5 text-[10px] font-normal tracking-wide text-muted uppercase",
+        "rounded border border-border bg-page px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-secondary uppercase",
         className
       )}
     >

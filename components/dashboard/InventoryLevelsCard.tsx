@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function InventoryLevelsCard() {
   return (
-    <Card className="min-h-[320px]">
+    <Card className="flex h-full min-h-[400px] w-full flex-col">
       <h2 className="font-medium text-base text-primary">Inventory levels</h2>
       <p className="mt-1 text-sm text-secondary">Top SKUs by stock on hand</p>
       <ul className="mt-5 space-y-5">
@@ -21,7 +21,7 @@ export function InventoryLevelsCard() {
                 <p className="truncate text-sm text-primary">{item.name}</p>
                 <StatusBadge status={item.status} />
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-page">
+              <div className="h-2.5 overflow-hidden rounded-full border border-border/60 bg-page">
                 <div
                   className={cn(
                     "h-full rounded-full transition-colors",

@@ -9,14 +9,14 @@ const options: { value: Period; label: string }[] = [
 ];
 
 export function PeriodToggle({
-  period,
+  active,
   onChange,
 }: {
-  period: Period;
+  active: Period | null;
   onChange: (period: Period) => void;
 }) {
   return (
-    <div className="inline-flex rounded-full border-hairline border-border bg-surface p-1">
+    <div className="inline-flex rounded-full border border-border-strong bg-surface p-1 shadow-card">
       {options.map((option) => (
         <button
           key={option.value}
@@ -24,9 +24,9 @@ export function PeriodToggle({
           onClick={() => onChange(option.value)}
           className={cn(
             "rounded-full px-4 py-1.5 text-sm transition-colors",
-            period === option.value
+            active === option.value
               ? "bg-primary text-surface"
-              : "bg-transparent text-secondary hover:text-primary"
+              : "border border-transparent text-secondary hover:border-border hover:bg-page hover:text-primary"
           )}
         >
           {option.label}

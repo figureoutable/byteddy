@@ -34,7 +34,7 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
             return (
               <span
                 key={item.label}
-                className="flex cursor-default items-center justify-between rounded-md px-3 py-2 text-sm text-muted"
+                className="flex cursor-default items-center justify-between rounded-md px-3 py-2 text-sm text-secondary/80"
               >
                 {item.label}
                 <ComingSoonBadge />
@@ -51,7 +51,7 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
                 "rounded-md px-3 py-2 text-sm transition-colors",
                 isActive
                   ? "rounded-[6px] bg-primary text-surface"
-                  : "text-secondary hover:bg-page"
+                  : "text-secondary hover:bg-page hover:text-primary"
               )}
             >
               {item.label}
@@ -68,7 +68,7 @@ export function Sidebar() {
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b-hairline border-border bg-surface px-4 py-3 lg:hidden">
+      <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b border-border bg-surface px-4 py-3 shadow-card lg:hidden">
         <p className="font-medium text-lg text-primary">By Teddy</p>
         <button
           type="button"
@@ -91,7 +91,7 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r-hairline border-border bg-surface pt-14 transition-transform lg:translate-x-0 lg:pt-0",
+          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-border bg-surface pt-14 shadow-card transition-transform lg:translate-x-0 lg:pt-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >

@@ -23,7 +23,7 @@ export function Header() {
   const meta = pageMeta[pathname] ?? { title: "By Teddy" };
 
   return (
-    <header className="border-b-hairline border-border bg-page px-4 py-4 sm:px-6">
+    <header className="border-b border-border bg-surface px-4 py-4 shadow-card sm:px-6">
       <h1 className="font-medium text-lg text-primary">{meta.title}</h1>
       {meta.subtitle && (
         <p className="mt-1 text-sm text-secondary">{meta.subtitle}</p>

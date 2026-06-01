@@ -4,7 +4,7 @@
 
 @layer base {
   * {
-    border-color: #c8bfb0;
+    border-color: #b8aa9a;
   }
 
   body {
@@ -15,6 +15,20 @@
   h2,
   h3,
   h4 {
-    @apply font-medium;
+    @apply font-medium text-primary;
+  }
+}
+
+@layer components {
+  .card-surface {
+    @apply rounded-[10px] border border-border bg-surface p-4 shadow-card;
+  }
+
+  .section-label {
+    @apply text-xs font-medium tracking-widest text-secondary uppercase;
+  }
+
+  .stat-inset {
+    @apply rounded-md border border-border bg-page px-3 py-2;
   }
 }

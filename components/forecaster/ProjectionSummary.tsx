@@ -39,9 +39,9 @@ export function ProjectionSummary({
         {items.map((item) => (
           <div
             key={item.label}
-            className="rounded-md border-hairline border-border bg-page px-3 py-3"
+            className="stat-inset py-3"
           >
-            <p className="text-xs text-muted">{item.label}</p>
+            <p className="text-xs font-medium text-secondary">{item.label}</p>
             <p className="mt-2 font-medium text-xl text-primary">{item.value}</p>
           </div>
         ))}

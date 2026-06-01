@@ -12,12 +12,42 @@ export interface MetricCardData {
   accent?: boolean;
 }
 
-export interface DashboardMetrics {
-  income: MetricCardData;
+export interface IncomeBreakdown {
+  total: number;
+  b2b: number;
+  d2c: number;
+  subLabel: string;
+  subLabelTone?: SubLabelTone;
+}
+
+export interface DashboardMonthData {
+  label: string;
+  income: IncomeBreakdown;
   profit: MetricCardData;
   tax: MetricCardData;
   daysTillTax: MetricCardData;
+  ecommerce: EcommerceKpiSet;
 }
+
+export const DASHBOARD_CURRENT_MONTH = "2026-06";
+export const DASHBOARD_PREVIOUS_MONTH = "2026-05";
+
+export const dashboardMonthOptions = [
+  { key: "2026-06", label: "Jun-26" },
+  { key: "2026-05", label: "May-26" },
+  { key: "2026-04", label: "Apr-26" },
+  { key: "2026-03", label: "Mar-26" },
+  { key: "2026-02", label: "Feb-26" },
+  { key: "2026-01", label: "Jan-26" },
+  { key: "2025-12", label: "Dec-25" },
+  { key: "2025-11", label: "Nov-25" },
+  { key: "2025-10", label: "Oct-25" },
+  { key: "2025-09", label: "Sep-25" },
+  { key: "2025-08", label: "Aug-25" },
+  { key: "2025-07", label: "Jul-25" },
+] as const;
+
+export type DashboardMonthKey = (typeof dashboardMonthOptions)[number]["key"];
 
 export interface RevenueMonth {
   month: string;
@@ -60,57 +90,6 @@ export interface BusinessMetric {
   value: string;
 }
 
-export const dashboardMetrics: Record<Period, DashboardMetrics> = {
-  thisMonth: {
-    income: {
-      label: "Income",
-      value: "£102,400",
-      subLabel: "+4.5% vs last month",
-      subLabelTone: "success",
-      accent: true,
-    },
-    profit: {
-      label: "Profit",
-      value: "£28,670",
-      subLabel: "28% margin",
-    },
-    tax: {
-      label: "Est. tax payable",
-      value: "£6,880",
-      subLabel: "CT + VAT combined",
-    },
-    daysTillTax: {
-      label: "Days till tax due",
-      value: "47",
-      subLabel: "VAT due 7 Jul",
-    },
-  },
-  lastMonth: {
-    income: {
-      label: "Income",
-      value: "£97,800",
-      subLabel: "+2.1% vs prior month",
-      subLabelTone: "success",
-      accent: true,
-    },
-    profit: {
-      label: "Profit",
-      value: "£26,400",
-      subLabel: "27% margin",
-    },
-    tax: {
-      label: "Est. tax payable",
-      value: "£6,336",
-      subLabel: "CT + VAT combined",
-    },
-    daysTillTax: {
-      label: "Days till tax due",
-      value: "74",
-      subLabel: "CT due 1 Sep",
-    },
-  },
-};
-
 export interface EcommerceKpiSet {
   primary: MetricCardData[];
   secondary: MetricCardData[];
@@ -144,17 +123,11 @@ export interface StockLevel {
   status: StockStatus;
 }
 
-export const dashboardPeriodLabels: Record<Period, string> = {
-  thisMonth: "Jun-26",
-  lastMonth: "May-26",
-};
-
-export const ecommerceKpis: Record<Period, EcommerceKpiSet> = {
-  thisMonth: {
+const ecommerceJun26: EcommerceKpiSet = {
     primary: [
       {
-        label: "Total revenue",
-        value: "£102,400",
+        label: "D2C orders",
+        value: "1,324",
         subLabel: "+4.5% vs last month",
         subLabelTone: "success",
         accent: true,
@@ -201,59 +174,316 @@ export const ecommerceKpis: Record<Period, EcommerceKpiSet> = {
         subLabel: "£8,200 spend this month",
       },
     ],
+};
+
+const ecommerceMay26: EcommerceKpiSet = {
+  primary: [
+    {
+      label: "D2C orders",
+      value: "1,266",
+      subLabel: "+2.1% vs prior month",
+      subLabelTone: "success",
+      accent: true,
+    },
+    {
+      label: "Average order value",
+      value: "£62.10",
+      subLabel: "Stable basket size",
+    },
+    {
+      label: "Conversion rate",
+      value: "3.1%",
+      subLabel: "Target: 3.2%",
+      subLabelTone: "warning",
+    },
+    {
+      label: "Customer acquisition cost",
+      value: "£12.40",
+      subLabel: "Blended paid + organic",
+    },
+  ],
+  secondary: [
+    {
+      label: "Net profit margin",
+      value: "27.0%",
+      subLabel: "After returns and ads",
+    },
+    {
+      label: "Return rate",
+      value: "6.8%",
+      subLabel: "Target: <8%",
+      subLabelTone: "success",
+    },
+    {
+      label: "Total orders",
+      value: "1,762",
+      subLabel: "+2.4% vs prior month",
+      subLabelTone: "success",
+    },
+    {
+      label: "Ad spend (ROAS)",
+      value: "4.2x",
+      subLabel: "£7,950 spend last month",
+    },
+  ],
+};
+
+export const dashboardByMonth: Record<string, DashboardMonthData> = {
+  "2026-06": {
+    label: "Jun-26",
+    income: {
+      total: 102400,
+      b2b: 28600,
+      d2c: 73800,
+      subLabel: "+4.5% vs last month",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£28,670", subLabel: "28% margin" },
+    tax: { label: "Est. tax payable", value: "£6,880", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "47", subLabel: "VAT due 7 Jul" },
+    ecommerce: ecommerceJun26,
   },
-  lastMonth: {
-    primary: [
-      {
-        label: "Total revenue",
-        value: "£97,800",
-        subLabel: "+2.1% vs prior month",
-        subLabelTone: "success",
-        accent: true,
-      },
-      {
-        label: "Average order value",
-        value: "£62.10",
-        subLabel: "Stable basket size",
-      },
-      {
-        label: "Conversion rate",
-        value: "3.1%",
-        subLabel: "Target: 3.2%",
-        subLabelTone: "warning",
-      },
-      {
-        label: "Customer acquisition cost",
-        value: "£12.40",
-        subLabel: "Blended paid + organic",
-      },
-    ],
-    secondary: [
-      {
-        label: "Net profit margin",
-        value: "27.0%",
-        subLabel: "After returns and ads",
-      },
-      {
-        label: "Return rate",
-        value: "6.8%",
-        subLabel: "Target: <8%",
-        subLabelTone: "success",
-      },
-      {
-        label: "Total orders",
-        value: "1,762",
-        subLabel: "+2.4% vs prior month",
-        subLabelTone: "success",
-      },
-      {
-        label: "Ad spend (ROAS)",
-        value: "4.2x",
-        subLabel: "£7,950 spend last month",
-      },
-    ],
+  "2026-05": {
+    label: "May-26",
+    income: {
+      total: 97800,
+      b2b: 26400,
+      d2c: 71400,
+      subLabel: "+2.1% vs prior month",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£26,400", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£6,336", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "74", subLabel: "CT due 1 Sep" },
+    ecommerce: ecommerceMay26,
+  },
+  "2026-04": {
+    label: "Apr-26",
+    income: {
+      total: 95600,
+      b2b: 25100,
+      d2c: 70500,
+      subLabel: "+3.8% vs prior month",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£25,900", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£6,180", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "82", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [
+        { ...ecommerceMay26.primary[0], value: "1,239", subLabel: "+3.8% vs prior month" },
+        { ...ecommerceMay26.primary[1], value: "£61.40" },
+        { ...ecommerceMay26.primary[2], value: "3.0%" },
+        { ...ecommerceMay26.primary[3], value: "£12.10" },
+      ],
+      secondary: [
+        { ...ecommerceMay26.secondary[0], value: "27.1%" },
+        { ...ecommerceMay26.secondary[1], value: "6.9%" },
+        { ...ecommerceMay26.secondary[2], value: "1,721" },
+        { ...ecommerceMay26.secondary[3], value: "4.3x", subLabel: "£7,800 spend this month" },
+      ],
+    },
+  },
+  "2026-03": {
+    label: "Mar-26",
+    income: {
+      total: 89200,
+      b2b: 22800,
+      d2c: 66400,
+      subLabel: "+1.9% vs prior month",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£24,100", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£5,920", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "90", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [
+        { ...ecommerceMay26.primary[0], value: "1,154", accent: true },
+        { ...ecommerceMay26.primary[1], value: "£60.80" },
+        { ...ecommerceMay26.primary[2], value: "2.9%", subLabelTone: "warning" },
+        { ...ecommerceMay26.primary[3], value: "£12.60" },
+      ],
+      secondary: [
+        { ...ecommerceMay26.secondary[0], value: "27.0%" },
+        { ...ecommerceMay26.secondary[2], value: "1,654" },
+        { ...ecommerceMay26.secondary[3], value: "4.1x", subLabel: "£7,600 spend this month" },
+        ecommerceMay26.secondary[1],
+      ],
+    },
+  },
+  "2026-02": {
+    label: "Feb-26",
+    income: {
+      total: 81800,
+      b2b: 20400,
+      d2c: 61400,
+      subLabel: "+2.4% vs prior month",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£22,050", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£5,480", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "98", subLabel: "CT due 1 Sep" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [
+        { ...ecommerceMay26.primary[0], value: "1,058", accent: true },
+        { ...ecommerceMay26.primary[1], value: "£59.90" },
+        ecommerceMay26.primary[2],
+        ecommerceMay26.primary[3],
+      ],
+      secondary: [
+        ecommerceMay26.secondary[0],
+        ecommerceMay26.secondary[1],
+        { ...ecommerceMay26.secondary[2], value: "1,598" },
+        { ...ecommerceMay26.secondary[3], value: "4.0x", subLabel: "£7,400 spend this month" },
+      ],
+    },
+  },
+  "2026-01": {
+    label: "Jan-26",
+    income: {
+      total: 73100,
+      b2b: 18200,
+      d2c: 54900,
+      subLabel: "Post-holiday normalisation",
+    },
+    profit: { label: "Profit", value: "£19,720", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£4,980", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "106", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [
+        { ...ecommerceMay26.primary[0], value: "936", accent: true },
+        { ...ecommerceMay26.primary[1], value: "£58.40" },
+        { ...ecommerceMay26.primary[2], value: "2.8%", subLabelTone: "warning" },
+        ecommerceMay26.primary[3],
+      ],
+      secondary: [
+        ecommerceMay26.secondary[0],
+        { ...ecommerceMay26.secondary[1], value: "7.1%" },
+        { ...ecommerceMay26.secondary[2], value: "1,412" },
+        { ...ecommerceMay26.secondary[3], value: "3.8x", subLabel: "£7,100 spend this month" },
+      ],
+    },
+  },
+  "2025-12": {
+    label: "Dec-25",
+    income: {
+      total: 97200,
+      b2b: 24100,
+      d2c: 73100,
+      subLabel: "Holiday peak",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£26,820", subLabel: "28% margin" },
+    tax: { label: "Est. tax payable", value: "£6,240", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "114", subLabel: "CT due 1 Sep" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [
+        { ...ecommerceMay26.primary[0], value: "1,244", accent: true, subLabel: "Seasonal uplift" },
+        { ...ecommerceMay26.primary[1], value: "£63.10" },
+        { ...ecommerceMay26.primary[2], value: "3.6%", subLabelTone: "success" },
+        ecommerceMay26.primary[3],
+      ],
+      secondary: [
+        { ...ecommerceMay26.secondary[0], value: "27.6%" },
+        ecommerceMay26.secondary[1],
+        { ...ecommerceMay26.secondary[2], value: "1,698" },
+        { ...ecommerceMay26.secondary[3], value: "4.5x", subLabel: "£8,100 spend this month" },
+      ],
+    },
+  },
+  "2025-11": {
+    label: "Nov-25",
+    income: {
+      total: 108800,
+      b2b: 30200,
+      d2c: 78600,
+      subLabel: "Black Friday uplift",
+      subLabelTone: "success",
+    },
+    profit: { label: "Profit", value: "£30,460", subLabel: "28% margin" },
+    tax: { label: "Est. tax payable", value: "£6,520", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "122", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [
+        {
+          ...ecommerceMay26.primary[0],
+          value: "1,392",
+          accent: true,
+          subLabel: "Black Friday peak",
+        },
+        { ...ecommerceMay26.primary[1], value: "£65.80" },
+        { ...ecommerceMay26.primary[2], value: "3.8%", subLabelTone: "success" },
+        { ...ecommerceMay26.primary[3], value: "£11.20" },
+      ],
+      secondary: [
+        { ...ecommerceMay26.secondary[0], value: "28.0%" },
+        ecommerceMay26.secondary[1],
+        { ...ecommerceMay26.secondary[2], value: "1,912" },
+        { ...ecommerceMay26.secondary[3], value: "4.8x", subLabel: "£8,800 spend this month" },
+      ],
+    },
+  },
+  "2025-10": {
+    label: "Oct-25",
+    income: { total: 82400, b2b: 20600, d2c: 61800, subLabel: "+1.2% vs prior month" },
+    profit: { label: "Profit", value: "£22,260", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£5,540", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "130", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [{ ...ecommerceMay26.primary[0], value: "1,054", accent: true }],
+      secondary: ecommerceMay26.secondary,
+    },
+  },
+  "2025-09": {
+    label: "Sep-25",
+    income: { total: 75900, b2b: 18900, d2c: 57000, subLabel: "+0.8% vs prior month" },
+    profit: { label: "Profit", value: "£20,490", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£5,120", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "138", subLabel: "CT due 1 Sep" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [{ ...ecommerceMay26.primary[0], value: "970", accent: true }],
+      secondary: ecommerceMay26.secondary,
+    },
+  },
+  "2025-08": {
+    label: "Aug-25",
+    income: { total: 71200, b2b: 17400, d2c: 53800, subLabel: "Summer slowdown" },
+    profit: { label: "Profit", value: "£19,220", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£4,860", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "146", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [{ ...ecommerceMay26.primary[0], value: "910", accent: true }],
+      secondary: ecommerceMay26.secondary,
+    },
+  },
+  "2025-07": {
+    label: "Jul-25",
+    income: { total: 67800, b2b: 16200, d2c: 51600, subLabel: "Baseline month" },
+    profit: { label: "Profit", value: "£18,300", subLabel: "27% margin" },
+    tax: { label: "Est. tax payable", value: "£4,620", subLabel: "CT + VAT combined" },
+    daysTillTax: { label: "Days till tax due", value: "154", subLabel: "VAT due 7 Jul" },
+    ecommerce: {
+      ...ecommerceMay26,
+      primary: [{ ...ecommerceMay26.primary[0], value: "867", accent: true }],
+      secondary: ecommerceMay26.secondary,
+    },
   },
 };
+
+export function getDashboardMonth(monthKey: string): DashboardMonthData {
+  return (
+    dashboardByMonth[monthKey] ?? dashboardByMonth[DASHBOARD_CURRENT_MONTH]
+  );
+}
 
 export const salesPerformance12Months: SalesMonth[] = [
   { month: "Jul", grossSales: 72000, returns: 4200, netSales: 67800 },
@@ -277,17 +507,17 @@ export const salesEventMarker = {
 
 export const salesByChannel: ChannelSale[] = [
   { name: "Shopify store", value: 71680, percent: 70, color: "#2C1A0E" },
-  { name: "Instagram shop", value: 20480, percent: 20, color: "#7A6A5A" },
-  { name: "Wholesale", value: 10240, percent: 10, color: "#C8BFB0" },
+  { name: "Instagram shop", value: 20480, percent: 20, color: "#6B5344" },
+  { name: "Wholesale", value: 10240, percent: 10, color: "#A89484" },
 ];
 
 export const operatingExpensesPeriod = "Jun-26";
 
 export const operatingExpenses: ExpenseCategory[] = [
   { name: "COGS", value: 49152, percent: 48, color: "#2C1A0E" },
-  { name: "Shipping & fulfillment", value: 14336, percent: 14, color: "#5C4A3A" },
-  { name: "Marketing spend", value: 8200, percent: 8, color: "#7A6A5A" },
-  { name: "Platform & G&A", value: 30720, percent: 30, color: "#9A8878" },
+  { name: "Shipping & fulfillment", value: 14336, percent: 14, color: "#6B5344" },
+  { name: "Marketing spend", value: 8200, percent: 8, color: "#8A7566" },
+  { name: "Platform & G&A", value: 30720, percent: 30, color: "#B8AA9A" },
 ];
 
 export const inventoryStockLevels: StockLevel[] = [
@@ -333,6 +563,46 @@ export const cashflowForecast: CashflowWeek[] = [
   { week: 12, openingBalance: 49700, cashIn: 31200, cashOut: 22400, closingBalance: 58500 },
 ];
 
+export interface CashflowScenario {
+  id: string;
+  label: string;
+  description: string;
+  affectedWeek: number;
+  cashInDelta?: number;
+  cashOutDelta?: number;
+}
+
+export const cashflowScenarios: CashflowScenario[] = [
+  {
+    id: "stock-purchase-w4",
+    label: "Stock purchase in week 4",
+    description: "Place a £12,000 inventory order with your main supplier",
+    affectedWeek: 4,
+    cashOutDelta: 12000,
+  },
+  {
+    id: "wholesale-deal-w7",
+    label: "Wholesale deal in week 7",
+    description: "An £18,500 B2B order lands and pays on receipt",
+    affectedWeek: 7,
+    cashInDelta: 18500,
+  },
+  {
+    id: "seasonal-restock-w8",
+    label: "Seasonal restock in week 8",
+    description: "Additional £9,200 stock payment for holiday build",
+    affectedWeek: 8,
+    cashOutDelta: 9200,
+  },
+  {
+    id: "retail-partner-w10",
+    label: "Retail partner PO in week 10",
+    description: "First department store purchase order (£14,000)",
+    affectedWeek: 10,
+    cashInDelta: 14000,
+  },
+];
+
 export const cashflowAssumptions: string[] = [
   "Average order value £58 across DTC and marketplace channels",
   "COGS at 52% of net revenue, aligned with current supplier pricing",
@@ -370,10 +640,10 @@ export const investorDocuments: InvestorDocument[] = [
 ];
 
 export const businessOverview =
-  "By Teddy is a UK-based ecommerce brand crafting thoughtful gifts and keepsakes. Founded in 2021, the business sells direct-to-consumer through its Shopify store and selected retail partners, with a focus on sustainable materials and personalisation.";
+  "By Teddy is a UK-based ecommerce brand crafting thoughtful gifts and keepsakes. Founded in 2024, the business sells direct-to-consumer through its Shopify store and selected retail partners, with a focus on sustainable materials and personalisation.";
 
 export const businessMetrics: BusinessMetric[] = [
-  { label: "Founded", value: "2021" },
+  { label: "Founded", value: "2024" },
   { label: "Revenue run rate", value: "£1.2m" },
   { label: "Units sold YTD", value: "9,840" },
   { label: "Markets", value: "UK and EU" },

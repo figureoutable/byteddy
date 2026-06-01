@@ -47,15 +47,15 @@ export function ScenarioPlanning({
         Adjust acquisition assumptions to model future ecommerce revenue.
       </p>
 
-      <div className="mt-5 flex flex-wrap items-end gap-3 border-b-hairline border-border pb-5">
+      <div className="mt-5 flex flex-wrap items-end gap-3 border-b border-border pb-5">
         <label className="flex flex-col gap-1.5 text-sm">
-          <span className="text-muted">Scenario slot</span>
+          <span className="text-sm font-medium text-secondary">Scenario slot</span>
           <select
             value={scenarioSlot}
             onChange={(e) =>
               onScenarioChange(e.target.value as ForecastScenarioSlot)
             }
-            className="rounded-md border-hairline border-border bg-surface px-3 py-2 text-sm text-primary transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
+            className="rounded-md border border-border bg-surface px-3 py-2 text-sm text-primary shadow-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary/30"
           >
             {(Object.keys(forecastScenarioLabels) as ForecastScenarioSlot[]).map(
               (slot) => (
@@ -68,7 +68,7 @@ export function ScenarioPlanning({
         </label>
 
         <label className="flex flex-col gap-1.5 text-sm">
-          <span className="text-muted">Months forward</span>
+          <span className="text-sm font-medium text-secondary">Months forward</span>
           <input
             type="number"
             min={1}
@@ -106,9 +106,9 @@ export function ScenarioPlanning({
               onChange={(e) =>
                 onInputChange(field.key, Number(e.target.value) || 0)
               }
-              className="rounded-md border-hairline border-border bg-page px-3 py-2 font-medium text-lg text-primary transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
+              className="rounded-md border border-border bg-page px-3 py-2 font-medium text-lg text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/30"
             />
-            <span className="text-xs leading-relaxed text-muted">
+            <span className="text-xs leading-relaxed text-secondary">
               {forecastInputHints[field.key]}
             </span>
           </label>

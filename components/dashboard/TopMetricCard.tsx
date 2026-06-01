@@ -13,17 +13,15 @@ export function TopMetricCard({ metric }: { metric: MetricCardData }) {
   return (
     <div
       className={cn(
-        "rounded-[10px] border-hairline border-border bg-surface px-4 py-[14px]",
-        metric.accent && "border-l-[3px] border-l-primary"
+        "card-surface px-4 py-[14px]",
+        metric.accent && "border-l-[3px] border-l-primary pl-[13px]"
       )}
     >
-      <p className="text-xs font-normal tracking-widest text-muted uppercase">
+      <p className="text-xs font-medium tracking-widest text-secondary uppercase">
         {metric.label}
       </p>
       <p className="mt-2 font-medium text-2xl text-primary">{metric.value}</p>
-      <p className={cn("mt-1 text-sm", subLabelToneClass[tone])}>
-        {metric.subLabel}
-      </p>
+      <p className={cn("mt-1 text-sm", subLabelToneClass[tone])}>{metric.subLabel}</p>
     </div>
   );
 }
